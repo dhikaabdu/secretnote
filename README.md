@@ -80,9 +80,11 @@ Komponen menggunakan `randomBytes()` dari modul `node:crypto` untuk menghasilkan
 
 Kunci AES-256 memiliki panjang 32 byte dan harus dijaga kerahasiaannya. Kunci tidak boleh disimpan bersama ciphertext atau diunggah ke repository. Pengelolaan kunci secara persisten dan integrasinya dengan aplikasi belum termasuk implementasi saat ini.
 
+
 ### 5.5 Batasan komponen
 
 Komponen ini merupakan implementasi dasar yang berdiri sendiri. Komponen belum diintegrasikan dengan formulir pembuatan catatan, penyimpanan permanen, autentikasi pengguna, atau mekanisme pengelolaan kunci. Oleh karena itu, implementasi ini belum menyatakan bahwa seluruh data catatan dalam aplikasi telah terlindungi secara kriptografis.
+
 
 ## 6. Pengujian Otomatis Kriptografi
 
@@ -135,12 +137,25 @@ secretnote/
 │   ├── layout.tsx
 │   └── page.tsx
 ├── components/
+│   ├── AppHeader.tsx
+│   ├── CategoryBadge.tsx
+│   ├── FormField.tsx
+│   ├── NoteCard.tsx
+│   └── PageHeader.tsx
 ├── lib/
 │   └── crypto.ts
 ├── tests/
 │   └── crypto.test.ts
 ├── docs/
 │   └── evidence/
+│       ├── 640px.png
+│       ├── 768px.png
+│       ├── 1024px.png
+│       ├── form-validation-empty.png
+│       ├── form-validation-success.png
+│       ├── crypto-tests.png
+│       ├── lighthouse-accessibility-desktop.png
+│       └── laporan-lighthouse-secretnote.pdf
 ├── AI_LOG.md
 ├── package.json
 └── README.md
@@ -181,91 +196,28 @@ Untuk menjalankan pengujian kriptografi, gunakan:
 npm run test:crypto
 ```
 
+## 10. Pengujian
 
+Pengujian aplikasi web mencakup:
 
-## 5. Teknologi yang Digunakan
-
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Node.js dan npm untuk menjalankan lingkungan pengembangan
-- Git dan GitHub untuk pengelolaan versi kode
-
-## 6. Struktur Proyek
-
-```text
-secretnote/
-├── app/
-│   ├── notes/
-│   │   ├── new/
-│   │   │   └── page.tsx
-│   │   └── page.tsx
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── AppHeader.tsx
-│   ├── CategoryBadge.tsx
-│   ├── FormField.tsx
-│   ├── NoteCard.tsx
-│   └── PageHeader.tsx
-├── public/
-├── AI_LOG.md
-├── package.json
-└── README.md
-```
-
-## 7. Cara Menjalankan Aplikasi
-
-### Prasyarat
-
-Pastikan Node.js dan npm sudah terpasang di komputer.
-
-### Instalasi dan menjalankan
-
-1. Buka terminal pada folder proyek.
-2. Jalankan perintah berikut untuk memasang dependensi:
-
-```bash
-npm install
-```
-
-3. Jalankan server pengembangan:
-
-```bash
-npm run dev
-```
-
-4. Buka browser dan akses:
-
-```text
-http://localhost:3000
-```
-
-Untuk menghentikan server, tekan `Ctrl + C` pada terminal.
-
-## 8. Pengujian
-
-Pengujian versi awal mencakup:
 - Pemeriksaan navigasi dashboard, daftar catatan, dan halaman catatan baru.
 - Pemeriksaan validasi ketika judul atau isi catatan kosong.
 - Pemeriksaan tampilan pada ukuran mobile, tablet, dan desktop.
 - Pengukuran aksesibilitas menggunakan Lighthouse.
 
-Hasil pengujian dan skor Lighthouse akan dicatat berdasarkan pengujian aktual. Target skor Accessibility adalah minimal 85.
-
-## 9. Pengembangan Selanjutnya
+Target skor Accessibility Lighthouse adalah minimal 85. Hasil pengujian aktual dan bukti pendukung dicantumkan pada bagian Bukti Pengujian Formulir dan Hasil Pengujian Lighthouse.
+## 11. Pengembangan Selanjutnya
 
 Pengembangan berikutnya dapat mencakup:
-- Penyimpanan catatan secara permanen.
-- Pengujian komponen kriptografi untuk melindungi isi catatan.
+
+- Integrasi komponen kriptografi dengan proses penyimpanan catatan.
+- Pengelolaan kunci enkripsi secara aman.
 - Pemodelan ancaman dan pencatatan risiko keamanan.
 - Peningkatan aksesibilitas dan pengalaman pengguna.
 
 Fitur tersebut hanya akan dinyatakan tersedia setelah implementasi dan pengujiannya selesai.
 
-## 10. Proyek Terpadu Mata Kuliah
+## 12. Proyek Terpadu Mata Kuliah
 
 SecretNote merupakan proyek individual yang dikembangkan secara bertahap untuk tiga mata kuliah:
 
@@ -275,7 +227,7 @@ SecretNote merupakan proyek individual yang dikembangkan secara bertahap untuk t
 
 Setiap artefak tugas akan ditambahkan ke repositori sesuai ketentuan dan tahapan pengumpulan masing-masing mata kuliah.
 
-## 11. Catatan Penggunaan AI
+## 13. Catatan Penggunaan AI
 
 Penggunaan AI dalam pengembangan dan dokumentasi dicatat pada file `AI_LOG.md`. Kode dan dokumentasi ditinjau serta diuji oleh pengembang sebelum digunakan sebagai hasil pengumpulan.
 
