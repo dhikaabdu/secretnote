@@ -38,3 +38,15 @@ Implementasi dan hasil pengujian yang belum dilakukan tidak dinyatakan sebagai f
 - **Batasan implementasi:** Komponen kriptografi belum diintegrasikan ke penyimpanan catatan permanen. Pengelolaan kunci dan perlindungan kriptografi menyeluruh pada aplikasi belum selesai.
 
 Catatan ini harus ditinjau oleh pengembang dan disesuaikan jika terdapat perubahan kode atau hasil pengujian berikutnya.
+
+## 7. Dokumentasi Keamanan Siber — Tugas Berikutnya
+
+- **Alat:** ChatGPT.
+- **Tujuan:** Membantu menyusun dokumentasi inventaris aset, Data Flow Diagram (DFD), pemodelan ancaman STRIDE, dan register risiko untuk proyek SecretNote.
+- **Ringkasan prompt:** Meminta panduan untuk memperbarui atau membuat `asset-inventory.md`, `dfd.md`, `threat-model.md`, dan `risk-register.md` berdasarkan implementasi produk yang berjalan serta ketentuan tugas Keamanan Komputasi dan Siber.
+- **Bagian yang dibantu:** Penyusunan inventaris aset, identifikasi elemen dan aliran data, identifikasi ancaman STRIDE, penilaian awal kemungkinan dan dampak risiko, serta rancangan kontrol mitigasi.
+- **Dasar analisis:** Pemeriksaan `README.md`, `app/page.tsx`, `app/notes/page.tsx`, `app/notes/new/page.tsx`, dan `lib/crypto.ts`.
+- **Batasan:** Penilaian risiko merupakan estimasi awal. Ancaman yang belum diuji tidak dinyatakan sebagai kerentanan yang terbukti. Kontrol mitigasi yang belum diterapkan tidak dinyatakan telah selesai.
+- **Verifikasi:** Dokumen diperiksa melalui Visual Studio Code dan PowerShell. Pemeriksaan akhir, commit, dan pembuatan tag `sec-0.1` dilakukan setelah seluruh dokumen selesai ditinjau.
+
+Catatan ini harus ditinjau dan diperbarui oleh pengembang sesuai perubahan aktual dan hasil verifikasi akhir.
