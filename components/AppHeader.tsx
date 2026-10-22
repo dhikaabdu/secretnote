@@ -1,5 +1,7 @@
 
 import Link from "next/link";
+import { Suspense } from "react";
+import NavLinks from "@/components/NavLinks";
 
 export default function AppHeader() {
   return (
@@ -21,19 +23,15 @@ export default function AppHeader() {
         </Link>
 
         <nav aria-label="Navigasi utama" className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="text-sm font-medium text-slate-600 hover:text-indigo-600"
+          <Suspense
+            fallback={
+              <span className="text-sm font-medium text-slate-600">
+                Navigasi
+              </span>
+            }
           >
-            Dashboard
-          </Link>
-
-          <Link
-            href="/notes"
-            className="text-sm font-medium text-slate-600 hover:text-indigo-600"
-          >
-            My Notes
-          </Link>
+            <NavLinks />
+          </Suspense>
 
           <Link
             href="/notes/new"
