@@ -1,5 +1,9 @@
 
 import { notFound } from "next/navigation";
+import AppHeader from "@/components/AppHeader";
+import { requireDemoSession } from "../../../lib/auth/session";
+
+export const instant = false;
 
 type NoteDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -8,6 +12,8 @@ type NoteDetailPageProps = {
 export default async function NoteDetailPage({
   params,
 }: NoteDetailPageProps) {
+  await requireDemoSession();
+
   const { id } = await params;
 
   // Validasi ID berupa bilangan bulat positif
@@ -16,14 +22,17 @@ export default async function NoteDetailPage({
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
-      <h1 className="text-2xl font-bold">
-        Detail Catatan
-      </h1>
+    <>
+      <AppHeader showLogout />
+      <main className="mx-auto max-w-3xl p-6">
+        <h1 className="text-2xl font-bold">
+          Detail Catatan
+        </h1>
 
-      <p className="mt-4">
-        ID Catatan: {id}
-      </p>
-    </main>
+        <p className="mt-4">
+          ID Catatan: {id}
+        </p>
+      </main>
+    </>
   );
 }

@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:crypto": "node --experimental-strip-types --test --test-reporter=spec tests/crypto.test.ts"
+    "test:crypto": "node --experimental-strip-types --test --test-reporter=spec tests/crypto.test.ts",
+    "test:notes": "node --experimental-strip-types --test --test-reporter=spec tests/note-action.test.ts",
+    "test:auth": "node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/auth.test.ts"
   },
   "dependencies": {
-    "next": "16.4.0",
+    "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
