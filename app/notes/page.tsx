@@ -3,6 +3,9 @@ import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
 import PageHeader from "@/components/PageHeader";
 import NoteCard from "@/components/NoteCard";
+import { requireDemoSession } from "../../lib/auth/session";
+
+export const instant = false;
 
 const notes = [
   {
@@ -25,10 +28,12 @@ const notes = [
   },
 ];
 
-export default function NotesPage() {
+export default async function NotesPage() {
+  await requireDemoSession();
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
-      <AppHeader />
+      <AppHeader showLogout />
 
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8">
         <PageHeader

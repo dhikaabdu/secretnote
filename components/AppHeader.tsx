@@ -2,8 +2,13 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import NavLinks from "@/components/NavLinks";
+import LogoutButton from "@/components/LogoutButton";
 
-export default function AppHeader() {
+export default function AppHeader({
+  showLogout = false,
+}: {
+  showLogout?: boolean;
+}) {
   return (
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
@@ -32,6 +37,17 @@ export default function AppHeader() {
           >
             <NavLinks />
           </Suspense>
+
+          {showLogout ? (
+            <LogoutButton />
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-indigo-700 hover:text-indigo-900"
+            >
+              Login demo
+            </Link>
+          )}
 
           <Link
             href="/notes/new"
