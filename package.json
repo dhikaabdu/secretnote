@@ -2,18 +2,19 @@
   "name": "secretnote",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "eslint",
-  "test:crypto": "node --experimental-strip-types --test --test-reporter=spec tests/crypto.test.ts",
-  "test:notes": "node --experimental-strip-types --test --test-reporter=spec tests/note-action.test.ts",
-  "test:auth": "node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/auth.test.ts",
-  "test:key-manager": "node --experimental-strip-types --test --test-reporter=spec tests/key-manager.test.ts",
-  "test:key-integration": "node --experimental-strip-types --test --test-reporter=spec tests/key-integration.test.ts"
-},
-
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:crypto": "node --experimental-strip-types --test --test-reporter=spec tests/crypto.test.ts",
+    "test:notes": "node --experimental-strip-types --test --test-reporter=spec tests/note-action.test.ts",
+    "test:auth": "node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/auth.test.ts",
+    "test:key-manager": "node --experimental-strip-types --test --test-reporter=spec tests/key-manager.test.ts",
+    "test:key-integration": "node --experimental-strip-types --test --test-reporter=spec tests/key-integration.test.ts",
+    "test:crud": "tsx --test --test-reporter=spec tests/crud-integration.test.ts",
+    "test:password": "node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/password.test.ts"
+  },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",

@@ -2,6 +2,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
+import DeleteNoteButton from "./delete-note-button";
 import { requireUserSession } from "@/lib/auth/user-session";
 import { appPrisma } from "@/lib/app-prisma";
 
@@ -56,6 +57,17 @@ export default async function NoteDetailPage({
 
           <div className="mt-6 whitespace-pre-wrap break-words text-slate-700">
             {note.content}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3 border-t border-slate-200 pt-5">
+            <Link
+              href={`/notes/${note.id}/edit`}
+              className="rounded-xl bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800"
+            >
+              Edit Catatan
+            </Link>
+
+            <DeleteNoteButton noteId={note.id} />
           </div>
         </article>
       </main>

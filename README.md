@@ -20,21 +20,98 @@ Masalah yang ditangani: catatan digital dapat memuat informasi
 pribadi sehingga perlu dikelola dengan baik dan dikembangkan dengan
 mempertimbangkan kerahasiaan, integritas, autentikasi, dan perlindungan
 akses.
-3. Fitur Aplikasi
-Fitur yang telah dikembangkan meliputi: - Dashboard dan halaman daftar
-catatan. - Halaman pembuatan catatan baru. - Pengelompokan catatan
-berdasarkan kategori. - Komponen antarmuka yang dapat digunakan
-kembali. - Validasi input pada formulir pembuatan catatan. - Server
-Action untuk memproses permintaan pembuatan catatan. - Autentikasi dan
-pengelolaan sesi pengguna. - Pembatasan akses pada halaman yang
-dilindungi. - Penyimpanan catatan menggunakan Prisma. - Modul
-kriptografi AES-256-GCM. - Modul pengelolaan kunci enkripsi eksternal.
+3. ## 3. Fitur Aplikasi
 
-Batasan penting: walaupun penyimpanan catatan melalui Prisma dan
-modul kriptografi telah tersedia, isi catatan yang disimpan melalui
-Prisma belum dienkripsi secara otomatis. Modul AES-256-GCM dan Key
-Manager telah diuji melalui pengujian terpisah, termasuk pengujian
-integrasi kunci eksternal dengan fungsi enkripsi dan dekripsi.
+Fitur SecretNote yang telah dikembangkan meliputi:
+
+**Manajemen Catatan (Note Management)**
+- Membuat catatan baru.
+- Menampilkan daftar dan detail catatan.
+- Mengubah judul, kategori, dan isi catatan.
+- Menghapus catatan.
+- Mengelola catatan berdasarkan kategori.
+- Menyimpan data catatan secara permanen menggunakan PostgreSQL dan Prisma ORM.
+
+**Manajemen Pengguna (User Management)**
+- Menampilkan daftar pengguna melalui halaman administrasi.
+- Mengubah username, email, dan role pengguna.
+- Menghapus pengguna.
+- Membatasi pengelolaan pengguna hanya untuk ADMIN.
+- Menerapkan perlindungan terhadap penghapusan atau penurunan role administrator terakhir.
+
+**Validasi dan Keamanan**
+- Validasi input menggunakan Zod.
+- Server Actions untuk pemrosesan data.
+- Autentikasi dan pengelolaan sesi pengguna.
+- Pembatasan akses berdasarkan role.
+- Password hashing menggunakan Argon2id.
+- Modul kriptografi AES-256-GCM.
+- Modul pengelolaan kunci enkripsi eksternal.
+
+**Batasan penting:** Modul AES-256-GCM dan Key Manager telah diimplementasikan dan diuji secara terpisah. Namun, enkripsi isi catatan belum terintegrasi secara otomatis dengan proses penyimpanan permanen melalui Prisma. Oleh karena itu, belum dapat dinyatakan bahwa seluruh isi catatan yang tersimpan telah terenkripsi secara end-to-end.
+## 3.1 Implementasi Tugas 2 — Pengembangan Aplikasi Web (v0.2)
+
+Pada milestone kedua, SecretNote dikembangkan dengan mengintegrasikan penyimpanan data persisten menggunakan PostgreSQL dan Prisma ORM 7.
+
+### A. Data Model
+
+Implementasi database aplikasi menggunakan tiga entitas:
+
+- **User:** menyimpan identitas pengguna, password hash, dan role.
+- **Note:** menyimpan catatan yang dimiliki oleh pengguna.
+- **Session:** menyimpan informasi sesi autentikasi pengguna.
+
+Relasi antardata:
+- User memiliki banyak Note (One-to-Many).
+- User memiliki banyak Session (One-to-Many).
+- Penghapusan User akan menghapus Note dan Session terkait melalui mekanisme cascade.
+
+### B. Implementasi CRUD
+
+**User Management**
+- Create: registrasi dan pembuatan pengguna.
+- Read: menampilkan daftar pengguna pada halaman administrasi.
+- Update: mengubah username, email, dan role.
+- Delete: menghapus pengguna beserta data terkait.
+
+**Note Management**
+- Create: membuat catatan baru.
+- Read: menampilkan daftar dan detail catatan.
+- Update: mengubah judul, kategori, dan isi catatan.
+- Delete: menghapus catatan.
+
+### C. Validasi dan Pemrosesan Data
+
+- Validasi input menggunakan Zod pada sisi server.
+- Pemrosesan operasi data menggunakan Next.js Server Actions.
+- Pesan kesalahan ditampilkan pada field yang relevan.
+- Pembatasan akses halaman administrasi berdasarkan role ADMIN.
+- Data disimpan secara persisten pada PostgreSQL melalui Prisma ORM.
+
+### D. Pengujian Integrasi Database
+
+Pengujian dilakukan menggunakan data sintetis untuk memverifikasi operasi CRUD dan relasi antardata.
+
+Hasil pengujian terakhir:
+- 10 skenario CRUD dan relasi PostgreSQL berhasil.
+- 9 skenario validasi Note berhasil.
+- Pengujian dilakukan menggunakan Node.js Test Runner dan Prisma Client.
+
+### E. Konfigurasi Database
+
+Konfigurasi database aplikasi menggunakan:
+- Prisma Schema: `prisma-app/schema.prisma`
+- Prisma Config: `prisma-app.config.ts`
+- Migration Directory: `prisma-app/migrations`
+- Environment Variable: `APP_DATABASE_URL`
+
+Perintah pengelolaan Prisma:
+
+```bash
+npx prisma generate --config prisma-app.config.ts
+npx prisma migrate status --config prisma-app.config.ts
+npx prisma migrate dev --config prisma-app.config.ts
+```
 4. Kebutuhan Keamanan dan Kriptografi
 SecretNote dirancang untuk mengelola catatan digital yang berpotensi
 memuat informasi pribadi. Komponen kriptografi menggunakan AES-256-GCM
@@ -149,7 +226,7 @@ diunggah ke repository GitHub atau dibagikan kepada pihak yang tidak
 berwenang.
 5.6 Validasi dan penanganan kegagalan
 Implementasi memvalidasi: 1. Tipe dan panjang kunci. 2. Tipe plaintext.
-3. Struktur data terenkripsi. 4. Versi dan algoritma. 5. Format Base64
+ Struktur data terenkripsi. 4. Versi dan algoritma. 5. Format Base64
 setiap field terkait. 6. Panjang nonce dan authentication tag. 7.
 Kesesuaian AAD. 8. Autentikasi ciphertext melalui authentication tag.
 
@@ -165,60 +242,65 @@ Namun, mekanisme enkripsi tersebut belum dihubungkan secara langsung
 dengan proses penyimpanan permanen isi catatan melalui Prisma. Oleh
 karena itu, belum dapat dinyatakan bahwa seluruh isi catatan yang
 tersimpan dalam aplikasi telah dienkripsi.
-6. Pengujian Otomatis
-Pengujian otomatis menggunakan Node.js Test Runner (node:test) dan
-node:assert/strict.
-6.1 Pengujian kriptografi dan pengelolaan kunci
-  Kelompok        Skenario                          Jumlah             Berhasil
-  AES-256-GCM dan Enkripsi/dekripsi                     10                   10
-AAD             normal, catatan
-kosong, nonce
-berbeda, kunci
-salah, ciphertext
-berubah, validasi
-AAD, AAD berubah,
-tag berubah, nonce
-berubah, Base64
-tidak valid
+6. ### 6.2 Pengujian Aplikasi dan Autentikasi
 
-  Key Management  Pembuatan dan                          4                    4
-penyimpanan kunci,
-pembacaan kunci,
-pencegahan
-penimpaan,
-penolakan file
-kunci tidak valid
+| Kelompok | Jumlah Pengujian | Berhasil |
+|---|---:|---:|
+| Note Validation | 9 | 9 |
+| Authentication | 11 | 11 |
+| Password / Argon2id | 5 | 5 |
+| CRUD dan Relasi PostgreSQL | 10 | 10 |
+| **Total** | **35** | **35** |
 
-  Key Integration Penggunaan kunci                       1                    1
-eksternal untuk
-enkripsi dan
-dekripsi
-Total                                         15               15
-6.2 Pengujian aplikasi dan autentikasi
-  Kelompok                Jumlah pengujian   Hasil terakhir yang dilaporkan
-  Note Validation                        9                          9 lulus
-Authentication                        11                         11 lulus
-Password / Argon2id                    5                          5 lulus
+### 6.3 Pengujian CRUD dan Relasi Database
 
-Berdasarkan hasil eksekusi yang telah dilaporkan selama pengembangan,
-total terdapat 40 pengujian lulus dari 40 pengujian. Rincian
-tersebut menggabungkan pengujian kriptografi, pengelolaan kunci,
-integrasi, validasi catatan, autentikasi, dan password. Hasil ini
-merupakan hasil pengujian modul masing-masing, bukan bukti bahwa seluruh
-alur penyimpanan catatan telah terenkripsi secara end-to-end.
-6.3 Perintah pengujian
-Perintah yang tersedia pada package.json:
+Pengujian integrasi dilakukan terhadap PostgreSQL menggunakan Prisma ORM dengan data sintetis.
+
+Skenario pengujian meliputi:
+
+1. Create User.
+2. Read User.
+3. Update User.
+4. Delete User.
+5. Create Note.
+6. Read Note.
+7. Update Note.
+8. Delete Note.
+9. Relasi User–Note.
+10. Relasi User–Session.
+
+Hasil pengujian terakhir: 10 skenario berhasil dan tidak terdapat kegagalan.
+
+### 6.4 Rekapitulasi Pengujian
+
+| Kelompok Pengujian | Jumlah | PASS |
+|---|---:|---:|
+| AES-256-GCM | 10 | 10 |
+| Key Management | 4 | 4 |
+| Key Integration | 1 | 1 |
+| Note Validation | 9 | 9 |
+| Authentication | 11 | 11 |
+| Password / Argon2id | 5 | 5 |
+| CRUD dan Relasi PostgreSQL | 10 | 10 |
+| **Total** | **50** | **50** |
+
+Berdasarkan hasil eksekusi pengujian, terdapat 50 pengujian berhasil dan 0 pengujian gagal. Hasil tersebut mencakup pengujian unit, validasi, autentikasi, serta pengujian integrasi CRUD dan relasi database.
+
+Keberhasilan pengujian modul kriptografi tidak berarti bahwa enkripsi telah diterapkan pada seluruh proses penyimpanan catatan secara end-to-end.
+
+### 6.5 Perintah Pengujian
+
+Pengujian dapat dijalankan menggunakan perintah berikut:
+
+```bash
 npm run test:crypto
-npm run test:key-manager
-npm run test:key-integration
 npm run test:notes
 npm run test:auth
-Pengujian password dapat dijalankan secara langsung dengan:
-node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/password.test.ts
-Catatan: warning MODULE_TYPELESS_PACKAGE_JSON dapat muncul ketika
-Node.js memproses file TypeScript sebagai ES Module tanpa deklarasi tipe
-modul eksplisit pada package.json. Warning tersebut tidak sama dengan
-kegagalan test.
+npm run test:key-manager
+npm run test:key-integration
+npm run test:password
+npm run test:crud
+```
 7. Teknologi yang Digunakan
 - Next.js 16
 - React 19
@@ -228,22 +310,35 @@ kegagalan test.
 - Prisma
 - Modul bawaan Node.js node:crypto
 - Modul bawaan Node.js node:test
+- PostgreSQL
+- Prisma ORM 7
+- Zod
+- Argon2id
+- Prisma PostgreSQL Adapter
 - Git dan GitHub untuk pengelolaan versi kode
 8. Struktur Proyek
 Struktur utama proyek yang relevan dengan pengembangan aplikasi dan
 Tugas 2:
 secretnote/
-├── app/
-│   ├── login/
-│   ├── notes/
-│   │   └── new/
-│   │       ├── actions.ts
-│   │       ├── note-form.tsx
-│   │       └── page.tsx
-│   ├── praktikum-modul-06/
-│   ├── globals.css
-│   ├── layout.tsx
+app/
+├── admin/
+│   ├── [id]/
+│   │   └── edit/
+│   │       ├── page.tsx
+│   │       └── edit-user-form.tsx
+│   ├── actions.ts
+│   ├── delete-user-button.tsx
 │   └── page.tsx
+├── notes/
+│   └── [id]/
+│       ├── edit/
+│       ├── actions.ts
+│       └── delete-note-button.tsx
+prisma-app/
+├── migrations/
+└── schema.prisma
+tests/
+└── crud-integration.test.ts
 ├── lib/
 │   ├── crypto.ts
 │   ├── key-manager.ts
@@ -342,3 +437,12 @@ kriptografi yang telah diimplementasikan dan diuji dari integrasi
 enkripsi ke penyimpanan permanen catatan yang belum tersedia. Jangan
 mengartikan keberhasilan pengujian modul sebagai bukti bahwa seluruh
 data aplikasi telah dienkripsi.
+
+# Generate Prisma Client
+npx prisma generate --config prisma-app.config.ts
+
+# Menjalankan migrasi database
+npx prisma migrate dev --config prisma-app.config.ts
+
+# Memeriksa status migrasi
+npx prisma migrate status --config prisma-app.config.ts

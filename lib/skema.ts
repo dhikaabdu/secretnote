@@ -1,3 +1,4 @@
+
 import { z } from "zod";
 
 export const NOTE_CATEGORIES = [
@@ -6,7 +7,6 @@ export const NOTE_CATEGORIES = [
   "Produktivitas",
   "Lainnya",
 ] as const;
-
 
 export const noteSchema = z.object({
   title: z
@@ -25,7 +25,6 @@ export const noteSchema = z.object({
     .min(1, "Isi catatan wajib diisi.")
     .max(20000, "Isi catatan maksimal 20.000 karakter."),
 });
-
 
 export type NoteCategory = (typeof NOTE_CATEGORIES)[number];
 export type NoteField = keyof typeof noteSchema.shape;
@@ -52,7 +51,6 @@ export const initialNoteFormState: NoteFormState = {
   },
 };
 
-
 export const registerSchema = z
   .object({
     username: z
@@ -60,7 +58,10 @@ export const registerSchema = z
       .trim()
       .min(3, "Username minimal 3 karakter.")
       .max(30, "Username maksimal 30 karakter.")
-      .regex(/^[a-zA-Z0-9_]+$/, "Username hanya boleh berisi huruf, angka, dan underscore."),
+      .regex(
+        /^[a-zA-Z0-9_]+$/,
+        "Username hanya boleh berisi huruf, angka, dan underscore.",
+      ),
 
     email: z
       .string({ error: "Email wajib diisi." })
@@ -82,3 +83,27 @@ export const registerSchema = z
   });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const adminUserSchema = z.object({
+  username: z
+    .string({ error: "Username wajib diisi." })
+    .trim()
+    .min(3, "Username minimal 3 karakter.")
+    .max(30, "Username maksimal 30 karakter.")
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Username hanya boleh berisi huruf, angka, dan underscore.",
+    ),
+
+  email: z
+    .string({ error: "Email wajib diisi." })
+    .trim()
+    .email("Format email tidak valid.")
+    .max(254, "Email maksimal 254 karakter."),
+
+  role: z.enum(["ADMIN", "USER"], {
+    error: "Role harus ADMIN atau USER.",
+  }),
+});
+
+export type AdminUserInput = z.infer<typeof adminUserSchema>;
