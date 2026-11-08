@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
 import PageHeader from "@/components/PageHeader";
@@ -13,11 +14,18 @@ export default function NewNoteForm() {
     validateNewNote,
     initialNoteFormState,
   );
+
   const [values, setValues] = useState(initialNoteFormState.values);
   const [dismissedErrors, setDismissedErrors] = useState<
     Partial<Record<keyof typeof values, boolean>>
   >({});
   const [messageDismissed, setMessageDismissed] = useState(false);
+
+  useEffect(() => {
+    if (state.status === "validated") {
+      setValues(state.values);
+    }
+  }, [state]);
 
   function updateField(field: keyof typeof values, value: string) {
     setValues((previous) => ({ ...previous, [field]: value }));
@@ -73,6 +81,9 @@ export default function NewNoteForm() {
               onChange={(event) => updateField("title", event.target.value)}
               error={titleError}
             />
+            <p className="mt-1 text-xs text-slate-500">
+              Maksimal 100 karakter.
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -82,6 +93,7 @@ export default function NewNoteForm() {
             >
               Kategori
             </label>
+
             <select
               id="category"
               name="category"
@@ -102,6 +114,7 @@ export default function NewNoteForm() {
               <option value="Produktivitas">Produktivitas</option>
               <option value="Lainnya">Lainnya</option>
             </select>
+
             {categoryError && (
               <p
                 id="category-error"
@@ -120,10 +133,12 @@ export default function NewNoteForm() {
             >
               Isi catatan
             </label>
+
             <textarea
               id="content"
               name="content"
               rows={6}
+              maxLength={20000}
               value={values.content}
               onChange={(event) =>
                 updateField("content", event.target.value)
@@ -139,6 +154,12 @@ export default function NewNoteForm() {
               }`}
               placeholder="Tuliskan isi catatan..."
             />
+
+            <div className="flex justify-between text-xs text-slate-500">
+              <span>Maksimal 20.000 karakter.</span>
+              <span>{values.content.length.toLocaleString("id-ID")}/20.000</span>
+            </div>
+
             {contentError && (
               <p
                 id="content-error"
@@ -167,15 +188,16 @@ export default function NewNoteForm() {
           <button
             type="submit"
             disabled={pending}
-            className="rounded-xl bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700"
+            className="rounded-xl bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {pending ? "Memvalidasi..." : "Validasi catatan"}
+            {pending ? "Menyimpan..." : "Simpan Catatan"}
           </button>
         </form>
 
         <p className="mt-4 text-xs leading-5 text-slate-600">
-          Versi awal menggunakan data contoh. Catatan belum disimpan
-          secara permanen dan belum dienkripsi.
+          Catatan disimpan secara permanen di database aplikasi dan
+          terhubung dengan akun pengguna. Enkripsi isi catatan belum
+          diintegrasikan.
         </p>
       </div>
     </main>

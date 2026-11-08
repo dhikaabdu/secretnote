@@ -2,7 +2,6 @@
 import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
 import PageHeader from "@/components/PageHeader";
-import NoteCard from "@/components/NoteCard";
 import CategoryBadge from "@/components/CategoryBadge";
 
 const notes = [
@@ -68,7 +67,10 @@ export default function Home() {
         <section aria-labelledby="recent-notes-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <h2 id="recent-notes-heading" className="text-xl font-bold text-slate-900">
+              <h2
+                id="recent-notes-heading"
+                className="text-xl font-bold text-slate-900"
+              >
                 Catatan terbaru
               </h2>
               <p className="mt-1 text-sm text-slate-500">
@@ -86,7 +88,29 @@ export default function Home() {
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {notes.map((note) => (
-              <NoteCard key={note.title} {...note} />
+              <article
+                key={note.title}
+                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <CategoryBadge category={note.category} />
+                  <span className="text-xs text-slate-400">
+                    {note.updated}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {note.title}
+                </h3>
+
+                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-600">
+                  {note.description}
+                </p>
+
+                <div className="mt-5 border-t border-slate-100 pt-4 text-xs text-slate-500">
+                  Contoh tampilan catatan
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -95,6 +119,7 @@ export default function Home() {
           <CategoryBadge category="Akademik" />
           <CategoryBadge category="Personal" />
           <CategoryBadge category="Produktivitas" />
+
           <Link
             href="/notes/new"
             className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
@@ -107,7 +132,7 @@ export default function Home() {
           SecretNote · Secure Personal Notes
           <br />
           Versi awal menggunakan data contoh dan belum menyimpan atau
-          mengenkripsi catatan secara nyata.
+          mengenkripsi catatan pada landing page.
         </footer>
       </main>
     </div>

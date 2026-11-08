@@ -3,33 +3,22 @@ import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
 import PageHeader from "@/components/PageHeader";
 import NoteCard from "@/components/NoteCard";
-import { requireDemoSession } from "../../lib/auth/session";
+import { requireUserSession } from "@/lib/auth/user-session";
+import { appPrisma } from "@/lib/app-prisma";
 
 export const instant = false;
 
-const notes = [
-  {
-    title: "Ide Proyek Semester 5",
-    category: "Akademik",
-    description: "Catatan rencana dan target pengembangan proyek.",
-    updated: "Hari ini",
-  },
-  {
-    title: "Catatan Pribadi",
-    category: "Personal",
-    description: "Tempat menyimpan pengingat dan hal penting.",
-    updated: "Kemarin",
-  },
-  {
-    title: "Daftar Pekerjaan",
-    category: "Produktivitas",
-    description: "Hal-hal yang perlu diselesaikan minggu ini.",
-    updated: "2 hari lalu",
-  },
-];
-
 export default async function NotesPage() {
-  await requireDemoSession();
+  const session = await requireUserSession();
+
+  const notes = await appPrisma.note.findMany({
+    where: {
+      userId: session.userId,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
@@ -56,13 +45,27 @@ export default async function NotesPage() {
           className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
         >
           {notes.map((note) => (
-            <NoteCard key={note.title} {...note} />
+            <NoteCard
+              key={note.id}
+              id={note.id}
+              title={note.title}
+              category={note.category ?? "Lainnya"}
+              description={note.content}
+              updated={note.updatedAt.toLocaleDateString("id-ID")}
+            />
           ))}
         </section>
 
-        <p className="mt-8 text-sm text-slate-500">
-          Saat ini daftar menggunakan data contoh, belum tersimpan permanen.
-        </p>
+        {notes.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
+            <h2 className="text-lg font-semibold text-slate-800">
+              Belum ada catatan
+            </h2>
+            <p className="mt-2 text-sm text-slate-500">
+              Mulai buat catatan pertamamu.
+            </p>
+          </div>
+        )}
       </div>
     </main>
   );
