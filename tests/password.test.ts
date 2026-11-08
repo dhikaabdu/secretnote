@@ -1,7 +1,6 @@
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import argon2 from "argon2";
 import { hashPassword, verifyPassword } from "../lib/auth/password.ts";
 
 describe("Password Security - Argon2id", () => {

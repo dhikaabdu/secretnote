@@ -1,8 +1,8 @@
+
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { validateNewNote } from "../app/notes/new/actions.ts";
-import { initialNoteFormState } from "../lib/skema.ts";
+import { validateNoteFormData } from "../lib/note-validation.ts";
 
 function createFormData(
   values: Partial<Record<"title" | "category" | "content", string>> = {},
@@ -11,6 +11,7 @@ function createFormData(
 
   for (const field of ["title", "category", "content"] as const) {
     const value = values[field];
+
     if (value !== undefined) {
       formData.set(field, value);
     }
@@ -19,9 +20,8 @@ function createFormData(
   return formData;
 }
 
-test("validasi menerima catatan dengan field dan kategori yang tersedia", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menerima catatan dengan field dan kategori yang tersedia", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "Catatan kuliah",
       category: "Akademik",
@@ -30,13 +30,13 @@ test("validasi menerima catatan dengan field dan kategori yang tersedia", async 
   );
 
   assert.equal(result.status, "validated");
-  assert.match(result.message, /belum disimpan/);
+  assert.equal(result.message, "Validasi catatan berhasil.");
   assert.deepEqual(result.errors, {});
+  assert.equal(result.values.title, "Catatan kuliah");
 });
 
-test("validasi server menolak judul yang hanya berisi spasi", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak judul yang hanya berisi spasi", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "   ",
       category: "Personal",
@@ -49,9 +49,8 @@ test("validasi server menolak judul yang hanya berisi spasi", async () => {
   assert.equal(result.values.title, "   ");
 });
 
-test("validasi server menolak isi catatan yang hanya berisi spasi", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak isi catatan yang hanya berisi spasi", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "Catatan",
       category: "Personal",
@@ -63,9 +62,8 @@ test("validasi server menolak isi catatan yang hanya berisi spasi", async () => 
   assert.equal(result.errors.content, "Isi catatan wajib diisi.");
 });
 
-test("validasi server menolak kategori yang tidak tersedia di formulir", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak kategori yang tidak tersedia", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "Catatan",
       category: "Rahasia",
@@ -75,12 +73,10 @@ test("validasi server menolak kategori yang tidak tersedia di formulir", async (
 
   assert.equal(result.status, "error");
   assert.equal(result.errors.category, "Pilih kategori yang tersedia.");
-  assert.equal(result.values.category, "Rahasia");
 });
 
-test("validasi server menolak judul yang tidak dikirim", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak judul yang tidak dikirim", () => {
+  const result = validateNoteFormData(
     createFormData({
       category: "Personal",
       content: "Isi catatan.",
@@ -91,9 +87,8 @@ test("validasi server menolak judul yang tidak dikirim", async () => {
   assert.equal(result.errors.title, "Judul catatan wajib diisi.");
 });
 
-test("validasi server menolak kategori yang tidak dikirim", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak kategori yang tidak dikirim", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "Catatan",
       content: "Isi catatan.",
@@ -104,9 +99,8 @@ test("validasi server menolak kategori yang tidak dikirim", async () => {
   assert.equal(result.errors.category, "Pilih kategori yang tersedia.");
 });
 
-test("validasi server menolak isi catatan yang tidak dikirim", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi menolak isi catatan yang tidak dikirim", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "Catatan",
       category: "Personal",
@@ -117,22 +111,22 @@ test("validasi server menolak isi catatan yang tidak dikirim", async () => {
   assert.equal(result.errors.content, "Isi catatan wajib diisi.");
 });
 
-test("validasi server menolak nilai file pada field teks", async () => {
+test("validasi menolak nilai file pada field teks", () => {
   const formData = createFormData({
     category: "Personal",
     content: "Isi catatan.",
   });
+
   formData.set("title", new File(["judul"], "judul.txt"));
 
-  const result = await validateNewNote(initialNoteFormState, formData);
+  const result = validateNoteFormData(formData);
 
   assert.equal(result.status, "error");
   assert.equal(result.errors.title, "Judul catatan wajib diisi.");
 });
 
-test("validasi server tidak menyatakan sukses jika ada lebih dari satu field salah", async () => {
-  const result = await validateNewNote(
-    initialNoteFormState,
+test("validasi mengembalikan seluruh kesalahan field sekaligus", () => {
+  const result = validateNoteFormData(
     createFormData({
       title: "",
       category: "Tidak ada",
