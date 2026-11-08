@@ -564,152 +564,152 @@
 
   [1;33mSuggestions[0m (46):
   [1;37m----------------------------[0m
-  [1;33m*[0m This release is more than 4 months old. Check the website or GitHub to see if there is an update available. [LYNIS] 
+  [1;33m*[0m This release is more than 4 months old. Check the website or GitHub to see if there is an update available. [LYNIS]
       [0;37mhttps://cisofy.com/lynis/controls/LYNIS/[0m
 
-  [1;33m*[0m Install libpam-tmpdir to set $TMP and $TMPDIR for PAM sessions [DEB-0280] 
+  [1;33m*[0m Install libpam-tmpdir to set $TMP and $TMPDIR for PAM sessions [DEB-0280]
       [0;37mhttps://cisofy.com/lynis/controls/DEB-0280/[0m
 
-  [1;33m*[0m Install apt-listbugs to display a list of critical bugs prior to each APT installation. [DEB-0810] 
+  [1;33m*[0m Install apt-listbugs to display a list of critical bugs prior to each APT installation. [DEB-0810]
       [0;37mhttps://cisofy.com/lynis/controls/DEB-0810/[0m
 
-  [1;33m*[0m Install apt-listchanges to display any significant changes prior to any upgrade via APT. [DEB-0811] 
+  [1;33m*[0m Install apt-listchanges to display any significant changes prior to any upgrade via APT. [DEB-0811]
       [0;37mhttps://cisofy.com/lynis/controls/DEB-0811/[0m
 
-  [1;33m*[0m Install needrestart, alternatively to debian-goodies, so that you can run needrestart after upgrades to determine which daemons are using old versions of libraries and need restarting. [DEB-0831] 
+  [1;33m*[0m Install needrestart, alternatively to debian-goodies, so that you can run needrestart after upgrades to determine which daemons are using old versions of libraries and need restarting. [DEB-0831]
       [0;37mhttps://cisofy.com/lynis/controls/DEB-0831/[0m
 
-  [1;33m*[0m Install fail2ban to automatically ban hosts that commit multiple authentication errors. [DEB-0880] 
+  [1;33m*[0m Install fail2ban to automatically ban hosts that commit multiple authentication errors. [DEB-0880]
       [0;37mhttps://cisofy.com/lynis/controls/DEB-0880/[0m
 
-  [1;33m*[0m Set a password on GRUB boot loader to prevent altering boot configuration (e.g. boot in single user mode without password) [BOOT-5122] 
+  [1;33m*[0m Set a password on GRUB boot loader to prevent altering boot configuration (e.g. boot in single user mode without password) [BOOT-5122]
       [0;37mhttps://cisofy.com/lynis/controls/BOOT-5122/[0m
 
-  [1;33m*[0m Consider hardening system services [BOOT-5264] 
+  [1;33m*[0m Consider hardening system services [BOOT-5264]
     - Details  : [0;36mRun '/usr/bin/systemd-analyze security SERVICE' for each service[0m
       [0;37mhttps://cisofy.com/lynis/controls/BOOT-5264/[0m
 
-  [1;33m*[0m If not required, consider explicit disabling of core dump in /etc/security/limits.conf file [KRNL-5820] 
+  [1;33m*[0m If not required, consider explicit disabling of core dump in /etc/security/limits.conf file [KRNL-5820]
       [0;37mhttps://cisofy.com/lynis/controls/KRNL-5820/[0m
 
-  [1;33m*[0m Check PAM configuration, add rounds if applicable and expire passwords to encrypt with new values [AUTH-9229] 
+  [1;33m*[0m Check PAM configuration, add rounds if applicable and expire passwords to encrypt with new values [AUTH-9229]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9229/[0m
 
-  [1;33m*[0m Configure password hashing rounds in /etc/login.defs [AUTH-9230] 
+  [1;33m*[0m Configure password hashing rounds in /etc/login.defs [AUTH-9230]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9230/[0m
 
-  [1;33m*[0m When possible set expire dates for all password protected accounts [AUTH-9282] 
+  [1;33m*[0m When possible set expire dates for all password protected accounts [AUTH-9282]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9282/[0m
 
-  [1;33m*[0m Configure minimum password age in /etc/login.defs [AUTH-9286] 
+  [1;33m*[0m Configure minimum password age in /etc/login.defs [AUTH-9286]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9286/[0m
 
-  [1;33m*[0m Configure maximum password age in /etc/login.defs [AUTH-9286] 
+  [1;33m*[0m Configure maximum password age in /etc/login.defs [AUTH-9286]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9286/[0m
 
-  [1;33m*[0m Default umask in /etc/login.defs could be more strict like 027 [AUTH-9328] 
+  [1;33m*[0m Default umask in /etc/login.defs could be more strict like 027 [AUTH-9328]
       [0;37mhttps://cisofy.com/lynis/controls/AUTH-9328/[0m
 
-  [1;33m*[0m To decrease the impact of a full /home file system, place /home on a separate partition [FILE-6310] 
+  [1;33m*[0m To decrease the impact of a full /home file system, place /home on a separate partition [FILE-6310]
       [0;37mhttps://cisofy.com/lynis/controls/FILE-6310/[0m
 
-  [1;33m*[0m To decrease the impact of a full /tmp file system, place /tmp on a separate partition [FILE-6310] 
+  [1;33m*[0m To decrease the impact of a full /tmp file system, place /tmp on a separate partition [FILE-6310]
       [0;37mhttps://cisofy.com/lynis/controls/FILE-6310/[0m
 
-  [1;33m*[0m To decrease the impact of a full /var file system, place /var on a separate partition [FILE-6310] 
+  [1;33m*[0m To decrease the impact of a full /var file system, place /var on a separate partition [FILE-6310]
       [0;37mhttps://cisofy.com/lynis/controls/FILE-6310/[0m
 
-  [1;33m*[0m Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft [USB-1000] 
+  [1;33m*[0m Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft [USB-1000]
       [0;37mhttps://cisofy.com/lynis/controls/USB-1000/[0m
 
-  [1;33m*[0m Check DNS configuration for the dns domain name [NAME-4028] 
+  [1;33m*[0m Check DNS configuration for the dns domain name [NAME-4028]
       [0;37mhttps://cisofy.com/lynis/controls/NAME-4028/[0m
 
-  [1;33m*[0m Purge old/removed packages (3 found) with aptitude purge or dpkg --purge command. This will cleanup old configuration files, cron jobs and startup scripts. [PKGS-7346] 
+  [1;33m*[0m Purge old/removed packages (3 found) with aptitude purge or dpkg --purge command. This will cleanup old configuration files, cron jobs and startup scripts. [PKGS-7346]
       [0;37mhttps://cisofy.com/lynis/controls/PKGS-7346/[0m
 
-  [1;33m*[0m Install debsums utility for the verification of packages with known good database. [PKGS-7370] 
+  [1;33m*[0m Install debsums utility for the verification of packages with known good database. [PKGS-7370]
       [0;37mhttps://cisofy.com/lynis/controls/PKGS-7370/[0m
 
-  [1;33m*[0m Install package apt-show-versions for patch management purposes [PKGS-7394] 
+  [1;33m*[0m Install package apt-show-versions for patch management purposes [PKGS-7394]
       [0;37mhttps://cisofy.com/lynis/controls/PKGS-7394/[0m
 
-  [1;33m*[0m Determine if protocol 'dccp' is really needed on this system [NETW-3200] 
+  [1;33m*[0m Determine if protocol 'dccp' is really needed on this system [NETW-3200]
       [0;37mhttps://cisofy.com/lynis/controls/NETW-3200/[0m
 
-  [1;33m*[0m Determine if protocol 'sctp' is really needed on this system [NETW-3200] 
+  [1;33m*[0m Determine if protocol 'sctp' is really needed on this system [NETW-3200]
       [0;37mhttps://cisofy.com/lynis/controls/NETW-3200/[0m
 
-  [1;33m*[0m Determine if protocol 'rds' is really needed on this system [NETW-3200] 
+  [1;33m*[0m Determine if protocol 'rds' is really needed on this system [NETW-3200]
       [0;37mhttps://cisofy.com/lynis/controls/NETW-3200/[0m
 
-  [1;33m*[0m Determine if protocol 'tipc' is really needed on this system [NETW-3200] 
+  [1;33m*[0m Determine if protocol 'tipc' is really needed on this system [NETW-3200]
       [0;37mhttps://cisofy.com/lynis/controls/NETW-3200/[0m
 
-  [1;33m*[0m Access to CUPS configuration could be more strict. [PRNT-2307] 
+  [1;33m*[0m Access to CUPS configuration could be more strict. [PRNT-2307]
       [0;37mhttps://cisofy.com/lynis/controls/PRNT-2307/[0m
 
-  [1;33m*[0m Check iptables rules to see which rules are currently not used [FIRE-4513] 
+  [1;33m*[0m Check iptables rules to see which rules are currently not used [FIRE-4513]
       [0;37mhttps://cisofy.com/lynis/controls/FIRE-4513/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mClientAliveCountMax (set 3 to 2)[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mLogLevel (set INFO to VERBOSE)[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mMaxAuthTries (set 6 to 3)[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mMaxSessions (set 10 to 2)[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mPort (set 22 to )[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Consider hardening SSH configuration [SSH-7408] 
+  [1;33m*[0m Consider hardening SSH configuration [SSH-7408]
     - Details  : [0;36mTCPKeepAlive (set YES to NO)[0m
       [0;37mhttps://cisofy.com/lynis/controls/SSH-7408/[0m
 
-  [1;33m*[0m Enable logging to an external logging host for archiving purposes and additional protection [LOGG-2154] 
+  [1;33m*[0m Enable logging to an external logging host for archiving purposes and additional protection [LOGG-2154]
       [0;37mhttps://cisofy.com/lynis/controls/LOGG-2154/[0m
 
-  [1;33m*[0m Check what deleted files are still in use and why. [LOGG-2190] 
+  [1;33m*[0m Check what deleted files are still in use and why. [LOGG-2190]
       [0;37mhttps://cisofy.com/lynis/controls/LOGG-2190/[0m
 
-  [1;33m*[0m Add a legal banner to /etc/issue, to warn unauthorized users [BANN-7126] 
+  [1;33m*[0m Add a legal banner to /etc/issue, to warn unauthorized users [BANN-7126]
       [0;37mhttps://cisofy.com/lynis/controls/BANN-7126/[0m
 
-  [1;33m*[0m Enable sysstat to collect accounting (disabled) [ACCT-9626] 
+  [1;33m*[0m Enable sysstat to collect accounting (disabled) [ACCT-9626]
       [0;37mhttps://cisofy.com/lynis/controls/ACCT-9626/[0m
 
-  [1;33m*[0m Audit daemon is enabled with an empty ruleset. Disable the daemon or define rules [ACCT-9630] 
+  [1;33m*[0m Audit daemon is enabled with an empty ruleset. Disable the daemon or define rules [ACCT-9630]
       [0;37mhttps://cisofy.com/lynis/controls/ACCT-9630/[0m
 
-  [1;33m*[0m Use SHA256 or SHA512 to create checksums in AIDE [FINT-4402] 
+  [1;33m*[0m Use SHA256 or SHA512 to create checksums in AIDE [FINT-4402]
       [0;37mhttps://cisofy.com/lynis/controls/FINT-4402/[0m
 
-  [1;33m*[0m Determine if automation tools are present for system management [TOOL-5002] 
+  [1;33m*[0m Determine if automation tools are present for system management [TOOL-5002]
       [0;37mhttps://cisofy.com/lynis/controls/TOOL-5002/[0m
 
-  [1;33m*[0m Consider restricting file permissions [FILE-7524] 
+  [1;33m*[0m Consider restricting file permissions [FILE-7524]
     - Details  : [0;36mSee screen output or log file[0m
     - Solution : Use chmod to change file permissions
       [0;37mhttps://cisofy.com/lynis/controls/FILE-7524/[0m
 
-  [1;33m*[0m One or more sysctl values differ from the scan profile and could be tweaked [KRNL-6000] 
+  [1;33m*[0m One or more sysctl values differ from the scan profile and could be tweaked [KRNL-6000]
     - Solution : Change sysctl value or disable test (skip-test=KRNL-6000:<sysctl-key>)
       [0;37mhttps://cisofy.com/lynis/controls/KRNL-6000/[0m
 
-  [1;33m*[0m Harden compilers like restricting access to root user only [HRDN-7222] 
+  [1;33m*[0m Harden compilers like restricting access to root user only [HRDN-7222]
       [0;37mhttps://cisofy.com/lynis/controls/HRDN-7222/[0m
 
-  [1;33m*[0m Harden the system by installing at least one malware scanner, to perform periodic file system scans [HRDN-7230] 
+  [1;33m*[0m Harden the system by installing at least one malware scanner, to perform periodic file system scans [HRDN-7230]
     - Solution : Install a tool like rkhunter, chkrootkit, OSSEC
       [0;37mhttps://cisofy.com/lynis/controls/HRDN-7230/[0m
 
@@ -757,4 +757,3 @@
 ================================================================================
 
   [0;44m[TIP][0m: [0;94mEnhance Lynis audits by adding your settings to custom.prf (see /etc/lynis/default.prf for all settings)[0m
-

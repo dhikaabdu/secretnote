@@ -1,6 +1,12 @@
-import Link from "next/link";
 import { Suspense } from "react";
+import { connection } from "next/server";
+import Link from "next/link";
 import ItemList from "./item-list";
+
+async function DaftarItem() {
+  await connection();
+  return <ItemList />;
+}
 
 export default function PraktikumModul06Page() {
   return (
@@ -28,11 +34,11 @@ export default function PraktikumModul06Page() {
         <Suspense
           fallback={
             <p className="mt-5 text-gray-500">
-              Memuat data praktikum...
+              Sedang memuat data praktikum...
             </p>
           }
         >
-          <ItemList />
+          <DaftarItem />
         </Suspense>
 
         <div className="mt-6 flex flex-wrap gap-3">

@@ -45,3 +45,14 @@ next-env.d.ts
 
 # Prisma generated client
 /generated/
+
+# SecretNote key storage
+/.secrets/
+*.key
+*.secret
+
+# Local AI development tools
+/.agents/
+/.claude/
+/.windsurf/
+skills-lock.json

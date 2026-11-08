@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import AppHeader from "@/components/AppHeader";
 import PageHeader from "@/components/PageHeader";
@@ -21,11 +21,15 @@ export default function NewNoteForm() {
   >({});
   const [messageDismissed, setMessageDismissed] = useState(false);
 
-  useEffect(() => {
+  const [previousState, setPreviousState] = useState(state);
+
+  if (state !== previousState) {
+    setPreviousState(state);
+
     if (state.status === "validated") {
       setValues(state.values);
     }
-  }, [state]);
+  }
 
   function updateField(field: keyof typeof values, value: string) {
     setValues((previous) => ({ ...previous, [field]: value }));
@@ -157,7 +161,9 @@ export default function NewNoteForm() {
 
             <div className="flex justify-between text-xs text-slate-500">
               <span>Maksimal 20.000 karakter.</span>
-              <span>{values.content.length.toLocaleString("id-ID")}/20.000</span>
+              <span>
+                {values.content.length.toLocaleString("id-ID")}/20.000
+              </span>
             </div>
 
             {contentError && (
