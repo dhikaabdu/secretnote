@@ -1,0 +1,15 @@
+meta {
+  name: GET missing Item
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/api/v1/item/2147483647
+}
+
+tests {
+  test("status is 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

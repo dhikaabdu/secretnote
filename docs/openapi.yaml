@@ -1,0 +1,567 @@
+openapi: 3.1.0
+info:
+  title: SecretNote API
+  version: 1.0.0
+  description: API catatan dan resource Item praktikum.
+servers:
+  - url: http://localhost:3000
+    description: Server pengembangan lokal
+security:
+  - sessionCookie: []
+paths:
+  /api/v1/notes:
+    get:
+      operationId: listNotes
+      summary: Mendapatkan catatan milik pengguna aktif
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Batas"
+        - $ref: "#/components/parameters/Category"
+      responses:
+        "200":
+          description: Daftar catatan dengan metadata pagination
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteListResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createNote
+      summary: Membuat catatan untuk pengguna aktif
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNote"
+      responses:
+        "201":
+          description: Catatan berhasil dibuat
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+  /api/v1/notes/{id}:
+    parameters:
+      - $ref: "#/components/parameters/NoteId"
+    get:
+      operationId: getNote
+      summary: Mendapatkan detail catatan milik pengguna aktif
+      responses:
+        "200":
+          description: Detail catatan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: patchNote
+      summary: Memperbarui sebagian field catatan milik pengguna aktif
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchNote"
+      responses:
+        "200":
+          description: Catatan berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteNote
+      summary: Menghapus catatan milik pengguna aktif
+      responses:
+        "204":
+          description: Catatan berhasil dihapus
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+  /api/v1/users/{userId}/notes:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: ID CUID pengguna yang sedang terautentikasi.
+        schema:
+          $ref: "#/components/schemas/Cuid"
+      - $ref: "#/components/parameters/Page"
+      - $ref: "#/components/parameters/Batas"
+      - $ref: "#/components/parameters/Category"
+    get:
+      operationId: listNotesForUser
+      summary: Mendapatkan relasi catatan untuk pengguna aktif
+      description: Pengguna hanya dapat membaca relasi catatannya sendiri.
+      responses:
+        "200":
+          description: Daftar catatan dengan metadata pagination
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoteListResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+  /api/v1/item/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ItemId"
+    get:
+      operationId: getItem
+      summary: Mendapatkan detail Item beserta ringkasan ulasannya
+      security: []
+      responses:
+        "200":
+          description: Detail Item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: patchItem
+      summary: Memperbarui sebagian field Item
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchItem"
+      responses:
+        "200":
+          description: Item berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemUpdateResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteItem
+      summary: Menghapus Item yang tidak memiliki ulasan
+      security: []
+      responses:
+        "204":
+          description: Item berhasil dihapus tanpa response body
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+  /api/v1/item/{id}/ulasan:
+    parameters:
+      - $ref: "#/components/parameters/ItemId"
+    get:
+      operationId: listItemReviews
+      summary: Mendapatkan ulasan milik Item
+      security: []
+      responses:
+        "200":
+          description: Daftar ulasan untuk Item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemReviewsResponse"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "500":
+          $ref: "#/components/responses/Problem"
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: secretnote_session
+  parameters:
+    NoteId:
+      name: id
+      in: path
+      required: true
+      description: ID CUID catatan.
+      schema:
+        $ref: "#/components/schemas/Cuid"
+    ItemId:
+      name: id
+      in: path
+      required: true
+      description: ID Item berupa bilangan bulat positif.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 2147483647
+    Page:
+      name: page
+      in: query
+      description: Nomor halaman, default 1.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 1
+    Batas:
+      name: batas
+      in: query
+      description: Jumlah catatan per halaman, default 20.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    Category:
+      name: category
+      in: query
+      schema:
+        $ref: "#/components/schemas/NoteCategory"
+  responses:
+    Problem:
+      description: Kesalahan dalam format Problem Details RFC 9457.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+  schemas:
+    Cuid:
+      type: string
+      pattern: "^c[a-z0-9]{24}$"
+      examples:
+        - c123456789012345678901234
+    NoteCategory:
+      type: string
+      enum:
+        - Personal
+        - Akademik
+        - Produktivitas
+        - Lainnya
+    CreateNote:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        content:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        category:
+          oneOf:
+            - $ref: "#/components/schemas/NoteCategory"
+            - type: "null"
+    PatchNote:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        content:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        category:
+          oneOf:
+            - $ref: "#/components/schemas/NoteCategory"
+            - type: "null"
+    Note:
+      type: object
+      required:
+        - id
+        - title
+        - content
+        - category
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          $ref: "#/components/schemas/Cuid"
+        title:
+          type: string
+        content:
+          type: string
+        category:
+          oneOf:
+            - $ref: "#/components/schemas/NoteCategory"
+            - type: "null"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    NoteResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: "#/components/schemas/Note"
+    NoteListResponse:
+      type: object
+      required:
+        - data
+        - pagination
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Note"
+        pagination:
+          type: object
+          required:
+            - page
+            - batas
+            - total
+            - totalPages
+          properties:
+            page:
+              type: integer
+            batas:
+              type: integer
+            total:
+              type: integer
+            totalPages:
+              type: integer
+    ItemCategory:
+      type: string
+      enum:
+        - energi
+        - lingkungan
+        - kampus
+    PatchItem:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        judul:
+          type: string
+          minLength: 1
+        kategori:
+          $ref: "#/components/schemas/ItemCategory"
+        deskripsi:
+          type: string
+          minLength: 1
+        tersedia:
+          type: boolean
+        gambar:
+          type:
+            - string
+            - "null"
+    ItemReview:
+      type: object
+      required:
+        - id
+        - nama
+        - nilai
+        - komentar
+        - dibuatPada
+        - itemId
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        nama:
+          type: string
+        nilai:
+          type: integer
+        komentar:
+          type: string
+        dibuatPada:
+          type: string
+          format: date-time
+        itemId:
+          type: integer
+          minimum: 1
+    ItemReviewSummary:
+      type: object
+      required:
+        - id
+        - nama
+        - nilai
+        - komentar
+        - dibuatPada
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        nama:
+          type: string
+        nilai:
+          type: integer
+        komentar:
+          type: string
+        dibuatPada:
+          type: string
+          format: date-time
+    ItemFields:
+      type: object
+      required:
+        - id
+        - judul
+        - kategori
+        - deskripsi
+        - tersedia
+        - gambar
+        - dibuatPada
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        judul:
+          type: string
+        kategori:
+          $ref: "#/components/schemas/ItemCategory"
+        deskripsi:
+          type: string
+        tersedia:
+          type: boolean
+        gambar:
+          type:
+            - string
+            - "null"
+        dibuatPada:
+          type: string
+          format: date-time
+    Item:
+      allOf:
+        - $ref: "#/components/schemas/ItemFields"
+        - type: object
+          required:
+            - ulasan
+          properties:
+            ulasan:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemReviewSummary"
+    ItemResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: "#/components/schemas/Item"
+    ItemUpdateResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: "#/components/schemas/ItemFields"
+    ItemReviewsResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemReview"
+    Problem:
+      type: object
+      required:
+        - type
+        - title
+        - status
+        - detail
+        - instance
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          const: about:blank
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            required:
+              - path
+              - message
+            properties:
+              path:
+                type: string
+              message:
+                type: string
