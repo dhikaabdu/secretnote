@@ -40,6 +40,7 @@ export async function ambilItem(id: number) {
       deskripsi: true,
       tersedia: true,
       gambar: true,
+      dibuatPada: true,
       ulasan: {
         select: {
           id: true,

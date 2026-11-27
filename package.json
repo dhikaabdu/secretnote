@@ -13,6 +13,7 @@
     "test:key-manager": "node --experimental-strip-types --test --test-reporter=spec tests/key-manager.test.ts",
     "test:key-integration": "node --experimental-strip-types --test --test-reporter=spec tests/key-integration.test.ts",
     "test:crud": "tsx --test --test-reporter=spec tests/crud-integration.test.ts",
+    "test:api": "node --experimental-strip-types --test --test-reporter=spec tests/note-api.test.ts tests/item-api.test.ts",
     "test:password": "node --conditions=react-server --experimental-strip-types --test --test-reporter=spec tests/password.test.ts"
   },
   "dependencies": {
